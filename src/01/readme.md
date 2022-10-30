@@ -5,18 +5,35 @@ Criar um programa que escreva na tela **Olá mundo!!** com uma quebra de linha
 
 > ### x86
 > ```asm
-> SECTION .data
-> msg	db	'Olá Mundo!!', 0Ah
-> 
-> SECTION .text
 > global	_start
 > 
-> _start:
-> 	mov	ebx, 1
-> 	mov ecx, msg
-> 	mov	edx, 12
-> 	mov	eax, 4
-> 	int	80h
+> SECTION .data
+> 	msg	db	'Olá Mundo!!', 0Ah	; 'Olá Mundo!!\n'
+> 	
+> SECTION .text
+> 	_start:
+> 		mov	ebx, 1		; ebx (arg0) = file descriptor
+> 		mov ecx, msg	; ecx (arg1) = endereço da string
+> 		mov	edx, 13		; edx (arg2) = tamanho da string
+> 		mov	eax, 4		; eax = código 4 para syscall write
+> 		int	80h			; invoca o eax (write)
+> ```
+
+
+> ### x86_64
+> ```asm
+> global	_start
+> 
+> SECTION .data
+> 	msg	db	'Olá Mundo!!', 0Ah	; 'Olá Mundo!!\n'
+>
+> SECTION .text
+> 	_start:
+> 		mov	rdi, 0		; rdi (arg0) = file descriptor
+> 		mov rsi, msg	; rsi (arg1) = endereço da string
+> 		mov	rdx, 13		; rdx (arg2) = tamanho da string
+> 		mov	rax, 1		; rax = código 1 para syscall write
+> 		syscall			; invoca o rax (write)> 												
 > ```
 
 ***
